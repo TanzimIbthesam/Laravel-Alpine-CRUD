@@ -16,24 +16,28 @@
        {{-- {{informations}} --}}
        <p x-text="name"></p>
           <template x-for="info in informations" :key="info.id">
+            
            <p x-text="info.title"></p>
        </template>   
-         <!-- <form x-on:submit.prevent="register"  method="post">
-             <input type="text" x-model="from.email" /><br>
-             <input type="password" x-model="from.password" /><br>
-            <button>Submit</button>
-
-         </form> -->
-
+       {{-- <div x-if="errors.length">
+        <div x-for="error in errors" :key="index" v-text={{error}} >
+           
+   </div>
+</div> --}}
          <form x-on:submit.prevent="createInfo" >
+           
             <input type="text" x-model="form.title" /><br> 
+           
             <input type="text" x-model="form.description" /><br> 
+            <template x-for="error in errors">
+              <div x-text="error[0]"></div>
+               </template> 
+             
             <button>Submit</button>
-
+            <div v-text="name.toUpperCase()"></div>
+            
          </form>
-       {{-- <div x-if="err">
-           {{errors}} 
-       </div> --}}
+     
    </div>
      
 <script>
@@ -43,7 +47,10 @@
     return{
         name:"Tanzim",
          informations:[],
+         
          errors:[],
+         
+            isLoggedIn:false,
          posts:['Post One'],
          form:{
              title:"",
@@ -69,51 +76,62 @@ async init() {
         //      this.informations=response;
          
         //  console.log(this.informations);
+        
         try {
         const resp = await axios.get('http://127.0.0.1:8000/allinformation');
         this.informations=resp.data
         console.log(this.informations);
     } catch (err) {
         // Handle Error Here
-        // this.errors=err.message
+         this.errors=err.message
+         console.log(err);
+        
     }
 
             
 },
       //With Fetch
-     createInfo(){
-         console.log("Cliked",this.form);
-        fetch('http://127.0.0.1:8000/information', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
-      },
-      body: JSON.stringify(this.form)
-    }).then(data=>{
-        console.log(data);
-        // this.informations+=data
-    })
-       this.init();
+    //  createInfo(){
+    //      console.log("Cliked",this.form);
+    //     fetch('http://127.0.0.1:8000/information', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //      'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+    //   },
+    //   body: JSON.stringify(this.form)
+    // }).then(data=>{
+    //     console.log(data);
+    //     // this.informations+=data
+    // })
+    //    this.init();
   
-        // const resp = await axios.post('http://127.0.0.1:8000/saveinformation',this.form);
-        // console.log(resp.data);
+    //     // const resp = await axios.post('http://127.0.0.1:8000/saveinformation',this.form);
+    //     // console.log(resp.data);
    
 
-    }
-    //  async createInfo(){
-    //      try {
-    //         const resp = await axios.post('http://127.0.0.1:8000/saveinformation',this.form);
-    //       console.log(resp);
+    // }
+    //With axios
+     async createInfo(){
+              try {
+                const response = await axios.post('http://127.0.0.1:8000/information',this.form);
+          console.log(response);
+              } catch (error) {
+                 
+                    if(error.response.status === 422) {
+                        this.errors = error?.response?.data?.errors;
+                          console.log(this.errors);
+                 
+              }
           
-    //      } catch (error) {
-    //          console.log(error);
-    //      }
-    //       this.init();
-    //  }
+          
+         
+          this.init();
+     }
     
  }
    } 
+   }
   
 </script>
 </html>

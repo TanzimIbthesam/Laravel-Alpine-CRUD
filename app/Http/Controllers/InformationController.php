@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\InformationRequest;
 use App\Models\Information;
 use Illuminate\Http\Request;
 
@@ -35,15 +36,13 @@ class InformationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(InformationRequest $request)
     {
         //
-        Information::create($request->all());
+        Information::create($request->validated());
     }
 
-    public function createInfo(Request $request){
-        Information::create($request->all());
-    }
+   
 
     /**
      * Store a newly created resource in storage.
@@ -51,10 +50,10 @@ class InformationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InformationRequest $request)
     {
         //
-        Information::create($request->all());
+        Information::create($request->validated());
     }
 
     /**

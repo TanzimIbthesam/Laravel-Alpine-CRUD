@@ -1,1 +1,8 @@
 # Laravel-Alpine-CRUD
+I have always loved Vue and since its so smooth and my go to choice. But at times in Laravel you might not need to make SPA in that case too you would want to do CRUD operations that is for all post requests and fetch data instantly. Cause the whole page doesnt reload and put pressure oon the server only the page you want to load that part of your site from which request is send. 
+For this the go thing over all these years have been Jquery AJAX which till date is but I never liked the syntax to be honest. The $ sign and every thing even the simpliest things looks so tough with Jquery. Though it includes many ready made things but the syntax looks horrible
+If I use Vue or React in such projects it would be an overkill. 
+Then Caleb Porzio came up with Laravel Livewire which created some hype but to me it was easy for many people who dont like Javascript but overall I also felt its a bit complicated.
+What about Vanilla Javascript then? Its awesome no doubt but in a real life project you will spend a lot of time just selecting query selectors, including text contents and everything though you can create helper functions and make it easy but still I feel its not the best match but still ok. 
+But Caleb also create another thing known as Alpine.js which is lightweight and you can say its like a very young brother of Vue and he prefers to use it with laravel for DOM manipulations. For this after checking out it its just a far distant brother of Vue he kept it so simple and lightweight. Its 6-7kb build size and syntax is so similar to Vue.
+So is started making async requests and so far I was able to create post requests and and fetch data in json format. Hopefully this will be a long term project  

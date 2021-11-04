@@ -19,11 +19,7 @@
             
            <p x-text="info.title"></p>
        </template>   
-       {{-- <div x-if="errors.length">
-        <div x-for="error in errors" :key="index" v-text={{error}} >
-           
-   </div>
-</div> --}}
+   
          <form x-on:submit.prevent="createInfo" >
            
             <input type="text" x-model="form.title" /><br> 
@@ -31,16 +27,11 @@
                 <div x-text="titleerrors()"></div>
                  </template> 
             <input type="text" x-model="form.description" /><br> 
-            {{-- <template x-for="error in errors">
-              <div x-text="error[0]"></div>
-               </template>  --}}
+            
                <template x-if="errors.description">
                 <div x-text="descriptionerrors()"></div>
                  </template>  
-              
-                 {{-- <p class=" text-red-500 text-xs text-center" v-if="errors.email">
-                    {{ errors.email.join(" ") }}
-                  </p>  --}}
+            
             <button>Submit</button>
             <div x-text="name.toUpperCase()"></div>
             
@@ -73,10 +64,7 @@
         descriptionerrors(){
            return this.errors.description.join(" ");
         },
-//       init() {
-//        let infos= fetch('http://127.0.0.1:8000/allinformation')
-//        .then(response => response.json())
-//        .then(data =>this.informations=data);
+
 
         
 
@@ -84,8 +72,7 @@
 // },
 async init() {
         //     // let api=await  fetch('http://127.0.0.1:8000/allinformation');
-        //     let response=axios.get('http://127.0.0.1:8000/allinformation');
-        // //    let response=await api.json();
+        //     
         //  console.log(response);
         //      this.informations=response;
          
@@ -130,6 +117,7 @@ async init() {
               try {
                 const response = await axios.post('http://127.0.0.1:8000/information',this.form);
           console.log(response);
+          this.init()
               } catch (error) {
                  
                     if(error.response.status === 422) {
@@ -140,7 +128,7 @@ async init() {
           
           
          
-          this.init();
+        //   this.init();
      }
     
  }

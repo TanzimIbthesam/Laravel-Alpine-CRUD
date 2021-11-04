@@ -14,28 +14,35 @@
     
    <div x-data="postData()">
        {{-- {{informations}} --}}
+       
+       <button  x-on:click="shownHideForm">Add Form</button>
+     
+       
+  
        <p x-text="name"></p>
           <template x-for="info in informations" :key="info.id">
             
            <p x-text="info.title"></p>
        </template>   
-   
-         <form x-on:submit.prevent="createInfo" >
+        
+            <form x-show="isShown" x-on:submit.prevent="createInfo" >
            
-            <input type="text" x-model="form.title" /><br> 
-            <template x-if="errors.title">
-                <div x-text="titleerrors()"></div>
-                 </template> 
-            <input type="text" x-model="form.description" /><br> 
-            
-               <template x-if="errors.description">
-                <div x-text="descriptionerrors()"></div>
-                 </template>  
-            
-            <button>Submit</button>
-            <div x-text="name.toUpperCase()"></div>
-            
-         </form>
+                <input type="text" x-model="form.title" /><br> 
+                <template x-if="errors.title">
+                    <div x-text="titleerrors()"></div>
+                     </template> 
+                <input type="text" x-model="form.description" /><br> 
+                
+                   <template x-if="errors.description">
+                    <div x-text="descriptionerrors()"></div>
+                     </template>  
+                
+                <button>Submit</button>
+                <div x-text="name.toUpperCase()"></div>
+                
+             </form>
+       
+        
      
    </div>
      
@@ -46,6 +53,7 @@
     return{
         name:"Tanzim",
          informations:[],
+         isShown:false,
          
          errors:[],
          
@@ -63,6 +71,11 @@
         },
         descriptionerrors(){
            return this.errors.description.join(" ");
+        },
+        shownHideForm(e){
+            e.stopPropagation();
+            console.log("clicked");
+           return this.isShown = !this.isShown
         },
 
 

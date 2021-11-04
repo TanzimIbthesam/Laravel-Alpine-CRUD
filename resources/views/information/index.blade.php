@@ -27,14 +27,22 @@
          <form x-on:submit.prevent="createInfo" >
            
             <input type="text" x-model="form.title" /><br> 
-           
+            <template x-if="errors.title">
+                <div x-text="titleerrors()"></div>
+                 </template> 
             <input type="text" x-model="form.description" /><br> 
-            <template x-for="error in errors">
+            {{-- <template x-for="error in errors">
               <div x-text="error[0]"></div>
-               </template> 
-             
+               </template>  --}}
+               <template x-if="errors.description">
+                <div x-text="descriptionerrors()"></div>
+                 </template>  
+              
+                 {{-- <p class=" text-red-500 text-xs text-center" v-if="errors.email">
+                    {{ errors.email.join(" ") }}
+                  </p>  --}}
             <button>Submit</button>
-            <div v-text="name.toUpperCase()"></div>
+            <div x-text="name.toUpperCase()"></div>
             
          </form>
      
@@ -58,6 +66,12 @@
          },
         click(){
             console.log("clicked");
+        },
+        titleerrors(){
+           return this.errors.title.join(" ");
+        },
+        descriptionerrors(){
+           return this.errors.description.join(" ");
         },
 //       init() {
 //        let infos= fetch('http://127.0.0.1:8000/allinformation')

@@ -99,5 +99,9 @@ class InformationController extends Controller
     public function destroy($id)
     {
         //
+        $information=Information::find($id);
+        // $information->delete();
+        return response()->json($information->delete());
+        // return redirect()-> route('category.index')->with('success','You category has been deleted successfully');
     }
 }

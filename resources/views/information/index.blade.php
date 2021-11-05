@@ -88,12 +88,12 @@
            
                 <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="form.title" /><br> 
                 <template x-if="errors.title">
-                    <div x-text="titleerrors()"></div>
+                    <div x-text="titleerrors()" class="text-red-500 font-serif "></div>
                      </template> 
                 <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="form.description" /><br> 
                 
                    <template x-if="errors.description">
-                    <div x-text="descriptionerrors()"></div>
+                    <div class="text-red-500 font-serif " x-text="descriptionerrors()"></div>
                      </template>  
                 
                 <button class="py-1 px-6 bg-blue-500 rounded-md ">Submit</button>

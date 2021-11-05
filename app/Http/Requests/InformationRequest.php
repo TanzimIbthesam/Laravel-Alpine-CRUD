@@ -24,9 +24,8 @@ class InformationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-            'title'=>['required','min:6'],
-            'description'=>['required','min:6']
+            'title' => 'required|min:4',
+            'description' => 'required|min:4',
         ];
     }
 }

@@ -190,7 +190,8 @@ async init() {
      async createInfo(){
               try {
                 const response = await axios.post('http://127.0.0.1:8000/information',this.form);
-          console.log(response);
+               console.log(response);
+               this.form='';
           this.init()
               } catch (error) {
                  
@@ -207,42 +208,49 @@ async init() {
     
  },
    
-   deleteInfo(id){
-            console.log(id);
+//    deleteInfo(id){
+//             console.log(id);
            
             
-             fetch('http://127.0.0.1:8000/information/'+id, {
-     method: 'DELETE',
-     headers: {
-       'Content-Type': 'application/json',
-       'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
-    //    "Access-Control-Allow-Origin": "*"
-     },
-     body: null
- })
- .then(response => {
-     this.informations.filter(information=>information.id !== id)
-     this.init()
- })
- .then(data => 
-     // this is the data we get after putting our data, do whatever you want with this data
-     console.log(data) 
- );
+//              fetch('http://127.0.0.1:8000/information/'+id, {
+//      method: 'DELETE',
+//      headers: {
+//        'Content-Type': 'application/json',
+//        'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
+    
+//      },
+//      body: null
+//  })
+//  .then(response => {
+//      this.informations.filter(information=>information.id !== id)
+//      this.init()
+//  })
+//  .then(data => 
+//      // this is the data we get after putting our data, do whatever you want with this data
+//      console.log(data) 
+//  );
 
 
-   }
+//    }
    //   Problems will resolve in future       },
-// async deleteInfo(id){
-//     let response=await axios.delete(`http://localhost:8000/information/${id}`)
-//     // withCredentials: false,
-//     console.log(response);
+ async deleteInfo(id){
+     try {
+        await  axios.delete(`http://127.0.0.1:8000/information/`+id)
+           
+            this.init(); 
+     } catch (error) {
+         console.log(error);
+     }
+ 
+    }
+    
   
    
     
-// }
+}
 }
 
-}
+
   
 </script>
 </html>

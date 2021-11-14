@@ -69,7 +69,22 @@
                     
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button class="px-4 py-1 bg-red-800 text-white rounded-md" x-on:click="deleteInfo(info.id)">Delete</button>
-                      <a href="#" class="text-indigo-600 hover:text-indigo-900">Delete</a>
+                        <button class="px-4 py-1 bg-blue-600 text-white rounded-md" x-on:click="shownEditHideForm(info.id)">Edit</button>
+                        <form x-show="showEditForm" x-on:submit.prevent="editInfo(info.id)"  class="space-y-3 mt-3 -mt-16 bg-blue-600">
+           
+                          <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="info.title"/><br> 
+           
+                          <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="info.description"/><br> 
+                        
+                          
+                         
+                           
+                          
+                          <button class="py-1 px-6 bg-blue-500 rounded-md">Submit</button> 
+                          
+                           
+                        </form> 
+                       
                     </td>
                   </tr>
                 </template>
@@ -81,28 +96,32 @@
         </div>
       </div>
    </div>
-      
+  
            
-        
+            {{-- Data Insert form --}}
             <form x-show="isShown" x-on:submit.prevent="createInfo" class="space-y-3 mt-3" >
            
-                <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="form.title" /><br> 
+                <input type="text" value="Title" class="py-1 px-4 border rounded-md w-64" x-model="form.title" /><br> 
                 <template x-if="errors.title">
                     <div x-text="titleerrors()" class="text-red-500 font-serif "></div>
                      </template> 
-                <input type="text" class="py-1 px-4 border rounded-md w-64" x-model="form.description" /><br> 
-                
+                <input type="text" value="Description" class="py-1 px-4 border rounded-md w-64" x-model="form.description" /><br> 
+                {{-- <input class="py-1 px-4 border rounded-md w-64" type="text" id="fname" name="fname" value="John"><br><br>  --}}
                    <template x-if="errors.description">
                     <div class="text-red-500 font-serif " x-text="descriptionerrors()"></div>
                      </template>  
                 
                 <button class="py-1 px-6 bg-blue-500 rounded-md ">Submit</button>
-                
+               
                 
              </form>
+             
        
         
      
+   </div>
+   <div>
+   
    </div>
 <script defer src="https://unpkg.com/alpinejs@3.5.0/dist/cdn.min.js"></script> 
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
@@ -114,6 +133,7 @@
         name:"Tanzim",
          informations:[],
          isShown:false,
+         showEditForm:false,
          
          errors:[],
          
@@ -137,20 +157,24 @@
             console.log("clicked");
            return this.isShown = !this.isShown
         },
-        
+        shownEditHideForm(id){
+            // e.stopPropagation();
+            console.log(id);
+            console.log("clicked edit");
+           return this.showEditForm = !this.showEditForm
+           axios.get(`http://127.0.0.1:8000/information/`+id)
+           .then(response=>console.log(response.data))
+        },
+       
+    
 
 
         
 
             
-// },
+
 async init() {
-        //     // let api=await  fetch('http://127.0.0.1:8000/allinformation');
-        //     
-        //  console.log(response);
-        //      this.informations=response;
-         
-        //  console.log(this.informations);
+     
         
         try {
         const resp = await axios.get('http://127.0.0.1:8000/allinformation');
@@ -165,28 +189,7 @@ async init() {
 
             
 },
-      //With Fetch
-    //  createInfo(){
-    //      console.log("Cliked",this.form);
-    //     fetch('http://127.0.0.1:8000/information', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //      'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
-    //   },
-    //   body: JSON.stringify(this.form)
-    // }).then(data=>{
-    //     console.log(data);
-    //     // this.informations+=data
-    // })
-    //    this.init();
-  
-    //     // const resp = await axios.post('http://127.0.0.1:8000/saveinformation',this.form);
-    //     // console.log(resp.data);
-   
 
-    // }
-    //With axios
      async createInfo(){
               try {
                 const response = await axios.post('http://127.0.0.1:8000/information',this.form);
@@ -201,40 +204,20 @@ async init() {
                  
               }
           
-          
-         
-        //   this.init();
      }
     
  },
-   
-//    deleteInfo(id){
-//             console.log(id);
-           
-            
-//              fetch('http://127.0.0.1:8000/information/'+id, {
-//      method: 'DELETE',
-//      headers: {
-//        'Content-Type': 'application/json',
-//        'X-CSRF-TOKEN': document.head.querySelector('meta[name=csrf-token]').content
-    
-//      },
-//      body: null
-//  })
-//  .then(response => {
-//      this.informations.filter(information=>information.id !== id)
-//      this.init()
-//  })
-//  .then(data => 
-//      // this is the data we get after putting our data, do whatever you want with this data
-//      console.log(data) 
-//  );
+// async editInfo(id){
+//   console.log("Edit",id);
+//  await axios.patch(`http://127.0.0.1:8000/information/`+id,this.form)
+//   .then(response=>console.log(response))
+//    },
 
 
-//    }
    //   Problems will resolve in future       },
  async deleteInfo(id){
      try {
+      
         await  axios.delete(`http://127.0.0.1:8000/information/`+id)
            
             this.init(); 

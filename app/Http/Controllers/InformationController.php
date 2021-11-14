@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InformationRequest;
+use App\Http\Requests\InformationUpdateRequest;
 use App\Models\Information;
 use Illuminate\Http\Request;
 
@@ -88,6 +89,9 @@ class InformationController extends Controller
     public function update(Request $request, $id)
     {
         //
+        // $information=Information::find($id);
+        // $information->update($request->all());
+
     }
 
     /**
@@ -100,8 +104,8 @@ class InformationController extends Controller
     {
         //
         $information=Information::find($id);
-        // $information->delete();
-        return response()->json($information->delete());
+         $information->delete();
+       // return response()->json($information->delete());
         // return redirect()-> route('category.index')->with('success','You category has been deleted successfully');
     }
 }
